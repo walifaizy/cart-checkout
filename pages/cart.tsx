@@ -1,5 +1,5 @@
 import React from 'react';
-import LoginScreen from '../components/login/index';
+import CartScreen from '../components/cart/index';
 import styled from 'styled-components';
 
 const Flexer = styled.div`
@@ -9,14 +9,14 @@ const Flexer = styled.div`
     align-items: center;
 `;
 
-class LoginPage extends React.PureComponent {
+class CartPage extends React.PureComponent {
     render() {
         return (
             <Flexer>
-                <LoginScreen />
+                <CartScreen />
             </Flexer>
         );
     }
 }
 
-export default LoginPage;
+export default CartPage;

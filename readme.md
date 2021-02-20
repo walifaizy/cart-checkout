@@ -1,6 +1,6 @@
-# github-search-wali-faizy
+# cart-checkout
 
-A single page application that consumes github search API
+A single page application for checkout process
 
 # Running locally
 
@@ -13,6 +13,7 @@ A single page application that consumes github search API
 # Technology Stack
 
 1. Node with YARN for managing the packages.
-2. ReactJS(NextJS) - for the UI development and integration.
+2. ReactJS(NextJS) - for the UI components.
 3. TypeScript
 4. Fetch API
+5. Styled Components
