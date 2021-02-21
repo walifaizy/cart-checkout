@@ -3,6 +3,7 @@ import { Input, Button } from '../common';
 import { TUserData, TRepo } from '../../_types';
 import validator from '../../utils/validator';
 import styled from 'styled-components';
+import Router, { withRouter } from 'next/router';
 
 const Wrapper = styled.div`
     display: flex;
@@ -123,11 +124,13 @@ class Login extends Component<void, State> {
 
     pushToCart = () => {
         if (!this.validate()) return;
+        Router.push({
+            pathname: '/cart',
+        });
     };
 
     render() {
         const { values, errors } = this.state;
-        console.log(this.state, 'STATE');
         return (
             <Wrapper>
                 <Title>Sign in to your account</Title>
@@ -174,4 +177,4 @@ class Login extends Component<void, State> {
     }
 }
 
-export default Login;
+export default withRouter(Login);

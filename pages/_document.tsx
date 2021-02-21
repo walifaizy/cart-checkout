@@ -10,7 +10,7 @@ class MyDocument extends Document {
         return (
             <Html>
                 <Head>
-                    <title>Github User Search</title>
+                    <title>Cart Checkout</title>
                 </Head>
                 <body>
                     <Main />
