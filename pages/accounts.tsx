@@ -1,5 +1,5 @@
 import React from 'react';
-import CartScreen from '../components/cart/index';
+import AccountsScreen from '../components/accounts/index';
 import styled from 'styled-components';
 
 const Flexer = styled.div`
@@ -10,14 +10,14 @@ const Flexer = styled.div`
     width: 100%;
 `;
 
-class CartPage extends React.PureComponent {
+class AccountsPage extends React.PureComponent {
     render() {
         return (
             <Flexer>
-                <CartScreen />
+                <AccountsScreen />
             </Flexer>
         );
     }
 }
 
-export default CartPage;
+export default AccountsPage;

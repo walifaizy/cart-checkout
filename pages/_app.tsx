@@ -3,10 +3,8 @@ import { GlobalStyles } from '../styles';
 function MyApp({ Component, pageProps }) {
     return (
         <div>
+            <GlobalStyles />
             <Component {...pageProps} />
-            <style jsx global>
-                {GlobalStyles}
-            </style>
         </div>
     );
 }

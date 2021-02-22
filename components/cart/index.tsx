@@ -1,19 +1,10 @@
-import React, { Component } from 'react';
-import { Input, Button } from '../common';
+import React from 'react';
+import Router from 'next/router';
+import { Button } from '../common';
 import { TUserData, TRepo } from '../../_types';
-import validator from '../../utils/validator';
 import styled from 'styled-components';
 import cartData from '../../data/index';
 import CartItem from './cartItem';
-
-const Wrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    width: 70%;
-    justify-content: center;
-    align-items: center;
-    height: 80vh;
-`;
 
 const CartWrapper = styled.div`
     display: flex;
@@ -32,29 +23,37 @@ const SummaryWrapper = styled.div`
     margin-left: 30px;
 `;
 
+const SummaryCtr = styled.div`
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgba(198, 204, 221, 0.5);
+    padding: 20px;
+    margin-top: 30px;
+    .title {
+        font-size: 23px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+    .total {
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px solid rgba(198, 204, 221, 0.5);
+        padding: 0 0 15px 0;
+        .amount {
+            color: rgb(55, 174, 2);
+            font-weight: 600;
+        }
+    }
+`;
+
 const Site = styled.div`
     padding: 0 25px;
     margin: 20px auto;
+    width: 100%;
+    box-sizing: border-box;
 `;
 
-const Title = styled.div`
-    font-size: 1.6rem;
-    font-weight: 600;
-    margin-bottom: 10px;
-`;
-
-const InputFormCtr = styled.div`
-    display: flex;
-    flex: 1;
-    flex-wrap: wrap;
-`;
-
-const BtnCtr = styled.div`
-    padding: 10px 0 0 0;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-`;
 const BtnText = styled.div``;
 
 const CartCount = styled.div`
@@ -71,38 +70,47 @@ const CartCount = styled.div`
     }
 `;
 
-type State = {
-    user: TUserData | null;
-    isLoading: boolean;
-    repos: TRepo[];
-    isReposLoading: boolean;
-    error: string;
-};
+const Cart = props => {
+    const list =
+        cartData &&
+        cartData.items &&
+        cartData.items.map((item, index) => {
+            return <CartItem item={item} key={index} cartCount={cartData && cartData.cartCount} />;
+        });
 
-class Cart extends Component<void, State> {
-    render() {
-        const list =
-            cartData &&
-            cartData.items &&
-            cartData.items.map((item, index) => {
-                return <CartItem item={item} key={index} cartCount={cartData && cartData.cartCount} />;
-            });
-        return (
-            <Site>
-                {' '}
-                <CartWrapper>
-                    <ItemWrapper>
-                        {' '}
-                        <CartCount>
-                            Cart <span className="crtCount">({cartData && cartData.cartCount} items)</span>
-                        </CartCount>
-                        {list}
-                    </ItemWrapper>
-                    <SummaryWrapper>Summary</SummaryWrapper>
-                </CartWrapper>
-            </Site>
-        );
-    }
-}
+    const pushToAccount = () => {
+        Router.push({
+            pathname: '/accounts',
+        });
+    };
+
+    return (
+        <Site>
+            {' '}
+            <CartWrapper>
+                <ItemWrapper>
+                    {' '}
+                    <CartCount>
+                        Cart <span className="crtCount">({cartData && cartData.cartCount} items)</span>
+                    </CartCount>
+                    {list}
+                </ItemWrapper>
+                <SummaryWrapper>
+                    <SummaryCtr>
+                        <div className="title">Order Summary</div>
+                        <div className="total">
+                            <span>Total</span>
+                            <span className="amount">AED {cartData && cartData.invoice.total}</span>
+                        </div>
+                        <br />
+                        <Button color={`#3866df`} solid onClick={pushToAccount}>
+                            <BtnText>Checkout</BtnText>
+                        </Button>
+                    </SummaryCtr>
+                </SummaryWrapper>
+            </CartWrapper>
+        </Site>
+    );
+};
 
 export default Cart;

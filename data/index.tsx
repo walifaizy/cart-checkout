@@ -28,13 +28,6 @@ const cartData = {
     ],
     invoice: {
         total: 202.35,
-        discountCredit: 0,
-        cashbackLoyalty: 2.02,
-        cashbackCoupon: 0.0,
-        discountCoupon: 10.65,
-        subtotal: 213.0,
-        feePayment: 0,
-        feeShipping: 0.0,
     },
     cartCount: 3,
 };
