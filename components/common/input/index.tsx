@@ -40,30 +40,7 @@ class Input extends React.PureComponent {
     state = {
         inFocus: false,
     };
-    setFocus = () => {
-        this.setState(
-            {
-                inFocus: true,
-            },
-            () => {
-                if (this.props.onFocus) {
-                    this.props.onFocus();
-                }
-            },
-        );
-    };
-    removeFocus = () => {
-        this.setState(
-            {
-                inFocus: false,
-            },
-            () => {
-                if (this.props.onBlur) {
-                    this.props.onBlur();
-                }
-            },
-        );
-    };
+
     onChange = e => {
         this.props.onChange(e);
     };
@@ -90,8 +67,6 @@ class Input extends React.PureComponent {
                         type={type}
                         className={`  ${className || ''}`}
                         {...rest}
-                        onFocus={() => this.setFocus()}
-                        onBlur={() => this.removeFocus()}
                         value={value}
                         onChange={this.onChange}
                         ref={setRef}

@@ -126,19 +126,8 @@ const SummaryCtr = styled.div`
     }
 `;
 
-// const Site = styled.div`
-//     padding: 0 25px;
-//     margin: 20px auto;
-//     width: 100%;
-//     box-sizing: border-box;
-// `;
-
-// const BtnText = styled.div``;
-
 class Payment extends Component {
     state = {
-        formData: null,
-
         number: '',
         name: '',
         expiry: '',
@@ -153,10 +142,8 @@ class Payment extends Component {
         }
     };
 
-    handleInputFocus = ({ target }) => {
-        this.setState({
-            focused: target && target.name,
-        });
+    handleInputFocus = e => {
+        this.setState({ focus: e.target.name });
     };
 
     handleInputChange = ({ target }) => {
@@ -199,6 +186,7 @@ class Payment extends Component {
                                             required
                                             onChange={this.handleInputChange}
                                             value={number}
+                                            onFocus={this.handleInputFocus}
                                         />
                                     </div>
                                 </InputCtr>
@@ -212,6 +200,7 @@ class Payment extends Component {
                                             required
                                             onChange={this.handleInputChange}
                                             value={name}
+                                            onFocus={this.handleInputFocus}
                                         />
                                     </div>
                                 </InputCtr>
@@ -230,6 +219,7 @@ class Payment extends Component {
                                             onChange={this.handleInputChange}
                                             value={expiry}
                                             pattern="\d\d/\d\d"
+                                            onFocus={this.handleInputFocus}
                                         />
                                     </div>
                                 </InputCtr>
@@ -246,7 +236,7 @@ class Payment extends Component {
                                             value={cvc}
                                             pattern="\d{3,4}"
                                             type="tel"
-                                            //onFocus={this.handleInputFocus}
+                                            onFocus={this.handleInputFocus}
                                         />
                                     </div>
                                 </InputCtr>
