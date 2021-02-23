@@ -15,5 +15,4 @@ A single page application for checkout process
 1. Node with YARN for managing the packages.
 2. ReactJS(NextJS) - for the UI components.
 3. TypeScript
-4. Fetch API
-5. Styled Components
+4. Styled Components
