@@ -76,6 +76,7 @@ class Input extends React.PureComponent {
 
             ctrClassName,
             setRef,
+            type,
 
             ...rest
         } = this.props;
@@ -86,7 +87,7 @@ class Input extends React.PureComponent {
             <Wrapper>
                 <Container className={`${error ? 'inputError' : ''} ${ctrClassName || ''}`}>
                     <input
-                        type="text"
+                        type={type}
                         className={`  ${className || ''}`}
                         {...rest}
                         onFocus={() => this.setFocus()}

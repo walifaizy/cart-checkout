@@ -101,17 +101,25 @@ class Accounts extends Component {
             isvalid = false;
             errors['email'] = 'Email required';
         }
-        if (validator.isValidInput(values['address'], 'text')) {
+        if (validator.isValidInput(values['address'], 'alphaNum')) {
             isvalid = false;
             errors['address'] = 'address required';
         }
-        if (validator.isValidInput(values['phone'], 'onlyNumber')) {
-            isvalid = false;
-            errors['phone'] = 'phone required';
-        }
+
         if (validator.isValidInput(values['name'], 'text')) {
             isvalid = false;
             errors['name'] = 'address required';
+        }
+
+        if (validator.validUAEPhoneNumber(values.phone)) {
+            isvalid = false;
+
+            errors['phone'] = 'Invalid UAE number';
+        }
+
+        if (validator.isValidInput(values['phone'], 'onlyNumber')) {
+            isvalid = false;
+            errors['phone'] = 'Only numbers allowed';
         }
 
         this.setState(prevState => ({ ...prevState, errors }));
@@ -121,7 +129,7 @@ class Accounts extends Component {
     pushToPayment = () => {
         if (!this.validate()) return;
         Router.push({
-            pathname: '/cart',
+            pathname: '/payment',
         });
     };
 
