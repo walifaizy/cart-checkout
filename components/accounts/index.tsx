@@ -63,6 +63,15 @@ const BtnCtr = styled.div`
 `;
 const BtnText = styled.div``;
 
+const Title = styled.div`
+    font-style: normal;
+    font-weight: bold;
+    font-size: 23px;
+    line-height: 25px;
+    color: rgb(51, 51, 51);
+    margin: 0 0 15px 0;
+`;
+
 class Accounts extends Component {
     state = {
         values: {},
@@ -120,6 +129,7 @@ class Accounts extends Component {
         const { values, errors } = this.state;
         return (
             <Site>
+                <Title>User Details</Title>
                 <Ctr>
                     <InputFormCtr>
                         <InputFlexer>
