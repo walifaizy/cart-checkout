@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Router from 'next/router';
-import { Button } from '../common';
+import { Button, AlertBox } from '../common';
 import { TUserData, TRepo } from '../../_types';
 import styled from 'styled-components';
 import cartData from '../../data/index';
@@ -66,6 +66,15 @@ const CartCount = styled.div`
 `;
 
 const Confirm = props => {
+    const [isOpen, setIsOpen] = useState(false);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsOpen(true);
+        }, 5000);
+        return () => clearTimeout(timer);
+    }, []);
+
     const list =
         cartData &&
         cartData.items &&
@@ -73,33 +82,42 @@ const Confirm = props => {
             return <Items item={item} key={index} cartCount={cartData && cartData.cartCount} />;
         });
 
-    const pushToAccount = () => {
+    const pushToCart = () => {
         Router.push({
-            pathname: '/accounts',
+            pathname: '/cart',
         });
     };
 
     return (
-        <Site>
-            {' '}
-            <CartWrapper>
-                <ItemWrapper>
-                    {' '}
-                    <CartCount>Your Order</CartCount>
-                    {list}
-                </ItemWrapper>
-                <SummaryWrapper>
-                    <SummaryCtr>
-                        <div className="title">Order Summary</div>
-                        <div className="total">
-                            <span>Total</span>
-                            <span className="amount">AED {cartData && cartData.invoice.total}</span>
-                        </div>
-                        <br />
-                    </SummaryCtr>
-                </SummaryWrapper>
-            </CartWrapper>
-        </Site>
+        <>
+            <Site>
+                {' '}
+                <CartWrapper>
+                    <ItemWrapper>
+                        {' '}
+                        <CartCount>Your Order</CartCount>
+                        {list}
+                    </ItemWrapper>
+                    <SummaryWrapper>
+                        <SummaryCtr>
+                            <div className="title">Order Summary</div>
+                            <div className="total">
+                                <span>Total</span>
+                                <span className="amount">AED {cartData && cartData.invoice.total}</span>
+                            </div>
+                            <br />
+                        </SummaryCtr>
+                    </SummaryWrapper>
+                </CartWrapper>
+            </Site>
+            <AlertBox
+                title="Your shopping cart is empty"
+                isOpen={isOpen}
+                onCloseAlert={() => setIsOpen(false)}
+                onConfirm={() => pushToCart()}
+                confirmBtnLabel="Continue Shopping"
+            ></AlertBox>
+        </>
     );
 };
 

@@ -2,6 +2,20 @@ import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import { Button } from '../index';
 
+const fadeIn = keyframes`
+	0% {
+		opacity: 0;
+		transform: translateY(45px);
+    }
+    60% {
+        opacity: 0;
+    }
+	to {
+		opacity: 1;
+		transform:  translateY(0);
+	}
+`;
+
 const Container = styled.div`
     position: fixed;
     left: 0;
@@ -17,7 +31,7 @@ const Container = styled.div`
     &.showAlertCtr {
         width: 100%;
         height: 100%;
-        animation: ${({ theme }) => theme.effect.fadeIn} 0.3s ease-in both;
+        animation: ${fadeIn} 0.3s ease-in both;
         z-index: 25;
     }
 `;
@@ -28,13 +42,13 @@ const Scrim = styled.div`
     width: 100%;
     height: 100%;
     display: block;
-    background: ${({ theme }) => theme.colors.secondaryText}22;
+    background: rgba(136, 136, 136, 0.133);
     z-index: 25;
 `;
 
 const Alert = styled.div`
-    background-color: ${({ theme }) => theme.colors.primary};
-    box-shadow: ${({ theme }) => theme.boxShadow.componentShadow};
+    background-color: rgb(255, 255, 255);
+    box-shadow: rgb(0 0 0 / 4%) 0px 1px 15px, rgb(0 0 0 / 4%) 0px 1px 6px;
     border-radius: 4px;
     margin: 10px 0;
     position: relative;
@@ -44,7 +58,7 @@ const Alert = styled.div`
     &.showAlert {
         height: auto;
         width: 260px;
-        animation: ${({ theme }) => theme.effect.fadeIn} 0.3s ease-in both;
+        animation: ${fadeIn} 0.3s ease-in both;
         z-index: 26;
         padding: 20px;
     }
@@ -61,7 +75,7 @@ const Alert = styled.div`
         flex-direction: column;
         line-height: 1.5;
         text-align: center;
-        color: ${({ theme }) => theme.colors.secondaryText};
+        color: rgb(136, 136, 136);
     }
     .title {
         text-align: center;
@@ -72,7 +86,7 @@ const Alert = styled.div`
     }
 `;
 
-class AlertBox extends React.PureComponent<> {
+class AlertBox extends React.PureComponent {
     componentDidMount() {
         document.addEventListener('keydown', this.escFunction, false);
     }
@@ -89,7 +103,6 @@ class AlertBox extends React.PureComponent<> {
             onCloseAlert,
             onCancel,
             onConfirm,
-            cancelBtnLabel = 'Cancel',
             confirmBtnLabel = 'Continue Shopping',
         } = this.props;
 
@@ -100,7 +113,7 @@ class AlertBox extends React.PureComponent<> {
                     <h3 className="title">{title}</h3>
                     <div className="children">{children}</div>
                     <div className="btnWrapper">
-                        <Button solid color={({ theme }) => theme.colors.dark} onClick={onConfirm}>
+                        <Button color={`#3866df`} solid onClick={onConfirm}>
                             {confirmBtnLabel}
                         </Button>
                     </div>
