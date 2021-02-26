@@ -4,7 +4,7 @@ import { Button } from '../common';
 import { TUserData, TRepo } from '../../_types';
 import styled from 'styled-components';
 import cartData from '../../data/index';
-import CartItem from '../common/items';
+import Items from '../common/items';
 
 const CartWrapper = styled.div`
     display: flex;
@@ -62,20 +62,15 @@ const CartCount = styled.div`
     font-size: 23px;
     line-height: 25px;
     color: rgb(51, 51, 51);
-    .crtCount {
-        font-size: 14px;
-        line-height: 28px;
-        color: rgb(126, 133, 155);
-        margin-left: 5px;
-    }
+    margin: 0 0 10px 0;
 `;
 
-const Cart = props => {
+const Confirm = props => {
     const list =
         cartData &&
         cartData.items &&
         cartData.items.map((item, index) => {
-            return <CartItem item={item} key={index} cartCount={cartData && cartData.cartCount} />;
+            return <Items item={item} key={index} cartCount={cartData && cartData.cartCount} />;
         });
 
     const pushToAccount = () => {
@@ -90,9 +85,7 @@ const Cart = props => {
             <CartWrapper>
                 <ItemWrapper>
                     {' '}
-                    <CartCount>
-                        Cart <span className="crtCount">({cartData && cartData.cartCount} items)</span>
-                    </CartCount>
+                    <CartCount>Your Order</CartCount>
                     {list}
                 </ItemWrapper>
                 <SummaryWrapper>
@@ -103,9 +96,6 @@ const Cart = props => {
                             <span className="amount">AED {cartData && cartData.invoice.total}</span>
                         </div>
                         <br />
-                        <Button color={`#3866df`} solid onClick={pushToAccount}>
-                            <BtnText>Checkout</BtnText>
-                        </Button>
                     </SummaryCtr>
                 </SummaryWrapper>
             </CartWrapper>
@@ -113,4 +103,4 @@ const Cart = props => {
     );
 };
 
-export default Cart;
+export default Confirm;

@@ -63,7 +63,7 @@ const SummaryCtr = styled.div`
     }
 `;
 
-const CartItem = props => {
+const Items = props => {
     const { item } = props;
     return (
         <>
@@ -90,4 +90,4 @@ const CartItem = props => {
     );
 };
 
-export default CartItem;
+export default Items;

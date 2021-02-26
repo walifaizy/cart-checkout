@@ -159,9 +159,9 @@ class Payment extends Component {
     };
 
     pushToPayment = () => {
-        if (!this.validate()) return;
+        // if (!this.validate()) return;
         Router.push({
-            pathname: '/cart',
+            pathname: '/confirm',
         });
     };
 
