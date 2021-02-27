@@ -78,17 +78,20 @@ const BtnCtr = styled.div`
 const BtnText = styled.div``;
 
 type State = {
-    user: TUserData | null;
-    isLoading: boolean;
-    repos: TRepo[];
-    isReposLoading: boolean;
-    error: string;
+    values: {
+        email: string;
+        password: string;
+    };
+    errors: {
+        email: string;
+        password: string;
+    };
 };
 
 class Login extends Component<void, State> {
     state: State = {
-        values: {},
-        errors: {},
+        values: { email: '', password: '' },
+        errors: { email: null, password: null },
     };
 
     onInputChange = e => {
@@ -161,6 +164,7 @@ class Login extends Component<void, State> {
                                         onChange={this.onInputChange}
                                         value={values['password']}
                                         error={errors['password']}
+                                        type="password"
                                     />
                                 </div>
                             </InputCtr>
@@ -177,4 +181,4 @@ class Login extends Component<void, State> {
     }
 }
 
-export default withRouter(Login);
+export default Login;

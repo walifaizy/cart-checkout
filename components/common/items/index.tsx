@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { TItems } from '../../../_types';
 
 const ItemCtr = styled.div``;
 
@@ -63,7 +64,7 @@ const SummaryCtr = styled.div`
     }
 `;
 
-const Items = props => {
+const Items = (props: TItems) => {
     const { item } = props;
     return (
         <>

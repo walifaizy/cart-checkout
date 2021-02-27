@@ -1,10 +1,14 @@
 import { GlobalStyles } from '../styles';
+import { CartContextProvider } from '../contexts/cartContext';
 
 function MyApp({ Component, pageProps }) {
     return (
         <div>
             <GlobalStyles />
-            <Component {...pageProps} />
+            <CartContextProvider>
+                {' '}
+                <Component {...pageProps} />
+            </CartContextProvider>
         </div>
     );
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
+import { TAlertBox } from '../../../_types';
 import { Button } from '../index';
 
 const fadeIn = keyframes`
@@ -86,7 +87,7 @@ const Alert = styled.div`
     }
 `;
 
-class AlertBox extends React.PureComponent {
+class AlertBox extends React.PureComponent<TAlertBox, {}> {
     componentDidMount() {
         document.addEventListener('keydown', this.escFunction, false);
     }

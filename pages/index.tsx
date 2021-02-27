@@ -9,14 +9,10 @@ const Flexer = styled.div`
     align-items: center;
 `;
 
-class LoginPage extends React.PureComponent {
-    render() {
-        return (
-            <Flexer>
-                <LoginScreen />
-            </Flexer>
-        );
-    }
-}
+const LoginPage = props => (
+    <Flexer>
+        <LoginScreen />
+    </Flexer>
+);
 
 export default LoginPage;

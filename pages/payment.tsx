@@ -10,12 +10,10 @@ const Flexer = styled.div`
     width: 100%;
 `;
 
-const PaymentPage = props => {
-    return (
-        <Flexer>
-            <PaymentScreen />
-        </Flexer>
-    );
-};
+const PaymentPage = props => (
+    <Flexer>
+        <PaymentScreen />
+    </Flexer>
+);
 
 export default PaymentPage;

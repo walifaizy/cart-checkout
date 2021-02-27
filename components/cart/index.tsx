@@ -71,11 +71,13 @@ const CartCount = styled.div`
 `;
 
 const Cart = props => {
+    const { cartInfo } = props;
+    const count = cartInfo && cartInfo.cartCount;
     const list =
-        cartData &&
-        cartData.items &&
-        cartData.items.map((item, index) => {
-            return <CartItem item={item} key={index} cartCount={cartData && cartData.cartCount} />;
+        cartInfo &&
+        cartInfo.items &&
+        cartInfo.items.map((item, index) => {
+            return <CartItem item={item} key={index} cartCount={count} />;
         });
 
     const pushToAccount = () => {
@@ -91,7 +93,7 @@ const Cart = props => {
                 <ItemWrapper>
                     {' '}
                     <CartCount>
-                        Cart <span className="crtCount">({cartData && cartData.cartCount} items)</span>
+                        Cart <span className="crtCount">({count} items)</span>
                     </CartCount>
                     {list}
                 </ItemWrapper>
@@ -100,7 +102,7 @@ const Cart = props => {
                         <div className="title">Order Summary</div>
                         <div className="total">
                             <span>Total</span>
-                            <span className="amount">AED {cartData && cartData.invoice.total}</span>
+                            <span className="amount">AED {cartInfo && cartInfo.invoice.total}</span>
                         </div>
                         <br />
                         <Button color={`#3866df`} solid onClick={pushToAccount}>

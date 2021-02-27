@@ -3,7 +3,6 @@ import Router from 'next/router';
 import { Button, AlertBox } from '../common';
 import { TUserData, TRepo } from '../../_types';
 import styled from 'styled-components';
-import cartData from '../../data/index';
 import Items from '../common/items';
 
 const CartWrapper = styled.div`
@@ -66,6 +65,7 @@ const CartCount = styled.div`
 `;
 
 const Confirm = props => {
+    const { cartInfo } = props;
     const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
@@ -76,10 +76,10 @@ const Confirm = props => {
     }, []);
 
     const list =
-        cartData &&
-        cartData.items &&
-        cartData.items.map((item, index) => {
-            return <Items item={item} key={index} cartCount={cartData && cartData.cartCount} />;
+        cartInfo &&
+        cartInfo.items &&
+        cartInfo.items.map((item, index) => {
+            return <Items item={item} key={index} cartCount={cartInfo && cartInfo.cartCount} />;
         });
 
     const pushToCart = () => {
@@ -103,7 +103,7 @@ const Confirm = props => {
                             <div className="title">Order Summary</div>
                             <div className="total">
                                 <span>Total</span>
-                                <span className="amount">AED {cartData && cartData.invoice.total}</span>
+                                <span className="amount">AED {cartInfo && cartInfo.invoice.total}</span>
                             </div>
                             <br />
                         </SummaryCtr>

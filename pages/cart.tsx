@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import CartScreen from '../components/cart/index';
 import styled from 'styled-components';
+import { CartContext } from '../contexts/cartContext';
 
 const Flexer = styled.div`
     display: flex;
@@ -10,14 +11,14 @@ const Flexer = styled.div`
     width: 100%;
 `;
 
-class CartPage extends React.PureComponent {
-    render() {
-        return (
-            <Flexer>
-                <CartScreen />
-            </Flexer>
-        );
-    }
-}
+const CartPage = props => {
+    const { cartInfo } = useContext(CartContext);
+
+    return (
+        <Flexer>
+            <CartScreen cartInfo={cartInfo} />
+        </Flexer>
+    );
+};
 
 export default CartPage;

@@ -7,9 +7,23 @@ export type TUserData = {
     bio: string;
 };
 
-export type TRepo = {
-    name: string;
-    url: string;
-    html_url: string;
-    description: string;
+export type TAlertBox = {
+    onCloseAlert?: () => void;
+    children?: React.ReactNode;
+    title?: React.ReactNode;
+    isOpen: boolean;
+    onConfirm?: () => void;
+    onCancel?: () => void;
+    confirmBtnLabel?: React.ReactNode;
+};
+
+export type TItems = {
+    item: {
+        imageURL: string;
+        estimatedDeliveryDate: string;
+        brand: string;
+        title: string;
+        warranty: string;
+        unitPrice: string;
+    };
 };

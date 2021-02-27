@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import ConfirmScreen from '../components/confirm/index';
 import styled from 'styled-components';
+import { CartContext } from '../contexts/cartContext';
 
 const Flexer = styled.div`
     display: flex;
@@ -10,14 +11,13 @@ const Flexer = styled.div`
     width: 100%;
 `;
 
-class ConfirmPage extends React.PureComponent {
-    render() {
-        return (
-            <Flexer>
-                <ConfirmScreen />
-            </Flexer>
-        );
-    }
-}
+const ConfirmPage = props => {
+    const { cartInfo } = useContext(CartContext);
+    return (
+        <Flexer>
+            <ConfirmScreen cartInfo={cartInfo} />
+        </Flexer>
+    );
+};
 
 export default ConfirmPage;

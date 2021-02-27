@@ -10,14 +10,12 @@ const Flexer = styled.div`
     width: 100%;
 `;
 
-class AccountsPage extends React.PureComponent {
-    render() {
-        return (
-            <Flexer>
-                <AccountsScreen />
-            </Flexer>
-        );
-    }
-}
+const AccountsPage = props => {
+    return (
+        <Flexer>
+            <AccountsScreen />
+        </Flexer>
+    );
+};
 
 export default AccountsPage;
