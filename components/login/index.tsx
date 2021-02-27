@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { Input, Button } from '../common';
 import { TUserData, TRepo } from '../../_types';
 import validator from '../../utils/validator';
@@ -77,108 +77,95 @@ const BtnCtr = styled.div`
 `;
 const BtnText = styled.div``;
 
-type State = {
-    values: {
-        email: string;
-        password: string;
-    };
-    errors: {
-        email: string;
-        password: string;
-    };
+export type TUserInfo = {
+    email: string;
+    password: string;
 };
 
-class Login extends Component<void, State> {
-    state: State = {
-        values: { email: '', password: '' },
-        errors: { email: null, password: null },
+type TUserInfoErrors = {
+    email?: string;
+    password?: string;
+};
+
+const Login = () => {
+    const [values, setValues] = useState<TUserInfo>({ email: '', password: '' });
+    const [errors, setErrors] = useState<TUserInfoErrors>({});
+
+    const onInputChange = e => {
+        setValues({ ...values, [e.target.name]: e.target.value });
+        setErrors({ ...errors, [e.target.name]: null });
     };
 
-    onInputChange = e => {
-        const values = { ...this.state.values };
-        const errors = { ...this.state.errors };
-        errors[e.target.name] = null;
-        // values[e.target.name] = e.target.value;
-        values[e.target.name] = e.target.value;
-        this.setState({
-            values,
-            errors,
-        });
-    };
-
-    validate = () => {
+    const validate = () => {
         let isvalid = true;
-        const errors = { ...this.state.errors };
+        const newErrors = { ...errors };
 
-        const { values } = this.state;
+        // const { values } = this.state;
 
         if (validator.isValidInput(values['email'], 'email')) {
             isvalid = false;
-            errors['email'] = 'Email required';
+            newErrors['email'] = 'Email required';
         }
-        if (validator.isValidInput(values['password'], 'text')) {
+        if (!values['password']) {
             isvalid = false;
-            errors['password'] = 'Pasword required';
+            newErrors['password'] = 'Pasword required';
         }
 
-        this.setState(prevState => ({ ...prevState, errors }));
+        // this.setState(prevState => ({ ...prevState, errors }));
+        setErrors(newErrors);
         return isvalid;
     };
 
-    pushToCart = () => {
-        if (!this.validate()) return;
+    const pushToCart = () => {
+        if (!validate()) return;
         Router.push({
             pathname: '/cart',
         });
     };
-
-    render() {
-        const { values, errors } = this.state;
-        return (
-            <Wrapper>
-                <Title>Sign in to your account</Title>
-                <LoginBox>
-                    {' '}
-                    <InputFormCtr>
-                        <InputFlexer>
-                            <InputCtr>
-                                <div className="label">Email</div>
-                                <div className="spacer"></div>
-                                <div className="eachInput">
-                                    <Input
-                                        placeholder={'Enter Email'}
-                                        name="email"
-                                        onChange={this.onInputChange}
-                                        value={values['email']}
-                                        error={errors['email']}
-                                    />
-                                </div>
-                            </InputCtr>
-                            <InputCtr>
-                                <div className="label">Password</div>
-                                <div className="spacer"></div>
-                                <div className="eachInput">
-                                    <Input
-                                        placeholder={'Enter Password'}
-                                        name="password"
-                                        onChange={this.onInputChange}
-                                        value={values['password']}
-                                        error={errors['password']}
-                                        type="password"
-                                    />
-                                </div>
-                            </InputCtr>
-                        </InputFlexer>
-                    </InputFormCtr>
-                    <BtnCtr>
-                        <Button color={`#3866df`} solid onClick={this.pushToCart}>
-                            <BtnText>Submit</BtnText>
-                        </Button>
-                    </BtnCtr>
-                </LoginBox>
-            </Wrapper>
-        );
-    }
-}
+    return (
+        <Wrapper>
+            <Title>Sign in to your account</Title>
+            <LoginBox>
+                {' '}
+                <InputFormCtr>
+                    <InputFlexer>
+                        <InputCtr>
+                            <div className="label">Email</div>
+                            <div className="spacer"></div>
+                            <div className="eachInput">
+                                <Input
+                                    placeholder={'Enter Email'}
+                                    name="email"
+                                    onChange={onInputChange}
+                                    value={values.email}
+                                    error={errors.email}
+                                />
+                            </div>
+                        </InputCtr>
+                        <InputCtr>
+                            <div className="label">Password</div>
+                            <div className="spacer"></div>
+                            <div className="eachInput">
+                                <Input
+                                    placeholder={'Enter Password'}
+                                    name="password"
+                                    onChange={onInputChange}
+                                    value={values.password}
+                                    error={errors.password}
+                                    type="password"
+                                />
+                            </div>
+                        </InputCtr>
+                    </InputFlexer>
+                </InputFormCtr>
+                <BtnCtr>
+                    <Button color={`#3866df`} solid onClick={pushToCart}>
+                        <BtnText>Submit</BtnText>
+                    </Button>
+                </BtnCtr>
+            </LoginBox>
+        </Wrapper>
+    );
+};
 
 export default Login;

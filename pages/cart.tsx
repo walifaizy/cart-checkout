@@ -11,14 +11,10 @@ const Flexer = styled.div`
     width: 100%;
 `;
 
-const CartPage = props => {
-    const { cartInfo } = useContext(CartContext);
-
-    return (
-        <Flexer>
-            <CartScreen cartInfo={cartInfo} />
-        </Flexer>
-    );
-};
+const CartPage = props => (
+    <Flexer>
+        <CartScreen />
+    </Flexer>
+);
 
 export default CartPage;

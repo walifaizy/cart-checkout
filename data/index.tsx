@@ -1,4 +1,23 @@
-const cartData = {
+type TCartItem = {
+    imageURL: string;
+    estimatedDeliveryDate: string;
+    unitPrice: number;
+    warranty: string;
+    brand: string;
+    title: string;
+};
+
+type TInvoice = {
+    total: number;
+};
+
+export type TCartData = {
+    items?: Array<TCartItem>;
+    invoice?: TInvoice;
+    cartCount?: number;
+};
+
+const cartData: TCartData = {
     items: [
         {
             imageURL: 'https://k.nooncdn.com/t_desktop-thumbnail-v1/v1585233265/N28431690A_1.jpg',
@@ -11,7 +30,6 @@ const cartData = {
         {
             imageURL: 'https://k.nooncdn.com/t_desktop-thumbnail-v1/v1595488129/N27407599A_1.jpg',
             estimatedDeliveryDate: '2021-02-23',
-            estimatedDelivery: 'Delivered by <highlight>Tue, Feb 23</highlight>',
             unitPrice: 15.0,
             warranty: '1 year warranty',
             brand: 'New Brand',

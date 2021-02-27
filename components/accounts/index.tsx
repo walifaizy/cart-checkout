@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, useState, useContext } from 'react';
 import Router, { withRouter } from 'next/router';
 import { Input, Button } from '../common';
 import validator from '../../utils/validator';
 import styled from 'styled-components';
+import { CartContext } from '../../contexts/cartContext';
 
 const Site = styled.div`
     padding: 0 25px;
@@ -72,141 +73,143 @@ const Title = styled.div`
     margin: 0 0 15px 0;
 `;
 
-class Accounts extends Component {
-    state = {
-        values: {},
-        errors: {},
+export type TAddressInfo = {
+    name: string;
+    address: string;
+    email: string;
+    phone: string;
+};
+
+type TAddressInfoErrors = {
+    name?: string;
+    address?: string;
+    email?: string;
+    phone?: string;
+};
+
+const Accounts = () => {
+    const { addressInfo, setAddressInfo } = useContext(CartContext);
+    const [values, setValues] = useState(addressInfo);
+    const [errors, setErrors] = useState<TAddressInfoErrors>({});
+
+    const onInputChange = e => {
+        setValues({ ...values, [e.target.name]: e.target.value });
+        setErrors({ ...errors, [e.target.name]: null });
     };
 
-    onFormChange = e => {
-        const values = { ...this.state.values };
-        const errors = { ...this.state.errors };
-
-        errors[e.target.name] = null;
-        values[e.target.name] = e.target.value;
-
-        this.setState({
-            values,
-            errors,
-        });
-    };
-
-    validate = () => {
+    const validate = () => {
         let isvalid = true;
-        const errors = { ...this.state.errors };
+        const newErrors = { ...errors };
 
-        const { values } = this.state;
+        //const { values } = this.state;
 
         if (validator.isValidInput(values['email'], 'email')) {
             isvalid = false;
-            errors['email'] = 'Email required';
+            newErrors['email'] = 'Email required';
         }
         if (validator.isValidInput(values['address'], 'alphaNum')) {
             isvalid = false;
-            errors['address'] = 'address required';
+            newErrors['address'] = 'address required';
         }
 
         if (validator.isValidInput(values['name'], 'text')) {
             isvalid = false;
-            errors['name'] = 'address required';
+            newErrors['name'] = 'address required';
         }
 
         if (validator.validUAEPhoneNumber(values.phone)) {
             isvalid = false;
 
-            errors['phone'] = 'Invalid UAE number';
+            newErrors['phone'] = 'Invalid UAE number';
         }
 
         if (validator.isValidInput(values['phone'], 'onlyNumber')) {
             isvalid = false;
-            errors['phone'] = 'Only numbers allowed';
+            newErrors['phone'] = 'Only numbers allowed';
         }
 
-        this.setState(prevState => ({ ...prevState, errors }));
+        setErrors(newErrors);
         return isvalid;
     };
 
-    pushToPayment = () => {
-        if (!this.validate()) return;
+    const pushToPayment = () => {
+        if (!validate()) return;
+        setAddressInfo(values);
         Router.push({
             pathname: '/payment',
         });
     };
-
-    render() {
-        const { values, errors } = this.state;
-        return (
-            <Site>
-                <Title>User Details</Title>
-                <Ctr>
-                    <InputFormCtr>
-                        <InputFlexer>
-                            <InputCtr>
-                                <div className="label">{'name'}</div>
-                                <div className="spacer"></div>
-                                <div className="eachInput">
-                                    <Input
-                                        placeholder={'name'}
-                                        name="name"
-                                        onChange={this.onFormChange}
-                                        value={values['name']}
-                                        error={errors['name']}
-                                    />
-                                </div>
-                            </InputCtr>
-                            <InputCtr>
-                                <div className="label">{'address'}</div>
-                                <div className="spacer"></div>
-                                <div className="eachInput">
-                                    <Input
-                                        placeholder={'address'}
-                                        name="address"
-                                        onChange={this.onFormChange}
-                                        value={values['address']}
-                                        error={errors['address']}
-                                    />
-                                </div>
-                            </InputCtr>
-                        </InputFlexer>
-                        <div className="spacebetween"></div>
-                        <InputFlexer>
-                            <InputCtr>
-                                <div className="label">{'email'}</div>
-                                <div className="spacer"></div>
-                                <div className="eachInput">
-                                    <Input
-                                        placeholder={'email'}
-                                        name="email"
-                                        onChange={this.onFormChange}
-                                        value={values['email']}
-                                        error={errors['email']}
-                                    />
-                                </div>
-                            </InputCtr>
-                            <InputCtr>
-                                <div className="label">{'phone'}</div>
-                                <div className="spacer"></div>
-                                <div className="eachInput">
-                                    <Input
-                                        placeholder={'phone'}
-                                        name="phone"
-                                        onChange={this.onFormChange}
-                                        value={values['phone']}
-                                        error={errors['phone']}
-                                    />
-                                </div>
-                            </InputCtr>
-                        </InputFlexer>
-                    </InputFormCtr>
-                    <BtnCtr>
-                        <Button color={`#3866df`} solid onClick={this.pushToPayment}>
-                            <BtnText>Submit</BtnText>
-                        </Button>
-                    </BtnCtr>
-                </Ctr>{' '}
-            </Site>
-        );
-    }
-}
+    return (
+        <Site>
+            <Title>User Details</Title>
+            <Ctr>
+                <InputFormCtr>
+                    <InputFlexer>
+                        <InputCtr>
+                            <div className="label">{'name'}</div>
+                            <div className="spacer"></div>
+                            <div className="eachInput">
+                                <Input
+                                    placeholder={'name'}
+                                    name="name"
+                                    onChange={onInputChange}
+                                    value={values.name}
+                                    error={errors.name}
+                                />
+                            </div>
+                        </InputCtr>
+                        <InputCtr>
+                            <div className="label">{'address'}</div>
+                            <div className="spacer"></div>
+                            <div className="eachInput">
+                                <Input
+                                    placeholder={'address'}
+                                    name="address"
+                                    onChange={onInputChange}
+                                    value={values.address}
+                                    error={errors.address}
+                                />
+                            </div>
+                        </InputCtr>
+                    </InputFlexer>
+                    <div className="spacebetween"></div>
+                    <InputFlexer>
+                        <InputCtr>
+                            <div className="label">{'email'}</div>
+                            <div className="spacer"></div>
+                            <div className="eachInput">
+                                <Input
+                                    placeholder={'email'}
+                                    name="email"
+                                    onChange={onInputChange}
+                                    value={values.email}
+                                    error={errors.email}
+                                />
+                            </div>
+                        </InputCtr>
+                        <InputCtr>
+                            <div className="label">{'phone'}</div>
+                            <div className="spacer"></div>
+                            <div className="eachInput">
+                                <Input
+                                    placeholder={'phone'}
+                                    name="phone"
+                                    onChange={onInputChange}
+                                    value={values.phone}
+                                    error={errors.phone}
+                                />
+                            </div>
+                        </InputCtr>
+                    </InputFlexer>
+                </InputFormCtr>
+                <BtnCtr>
+                    <Button color={`#3866df`} solid onClick={pushToPayment}>
+                        <BtnText>Submit</BtnText>
+                    </Button>
+                </BtnCtr>
+            </Ctr>{' '}
+        </Site>
+    );
+};
 
 export default Accounts;

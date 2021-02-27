@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import Router, { withRouter } from 'next/router';
 import Card from 'react-credit-cards';
 import { Input, Button } from '../common';
+import Config from '../../config';
 import validator from '../../utils/validator';
 import styled from 'styled-components';
 
@@ -126,144 +127,162 @@ const SummaryCtr = styled.div`
     }
 `;
 
-class Payment extends Component {
-    state = {
+const Payment = () => {
+    const [values, setValues] = useState({
         number: '',
         name: '',
         expiry: '',
         cvc: '',
         issuer: '',
         focused: '',
-    };
+    });
+    const { number, name, cvc, issuer, focused, expiry } = values;
+    const [loading, setLoading] = useState(false);
+    // const handleCallback = ({ issuer }, isValid) => {
+    //     if (isValid) {
+    //         this.setState({ issuer });
+    //     }
+    // };
 
-    handleCallback = ({ issuer }, isValid) => {
-        if (isValid) {
-            this.setState({ issuer });
+    // const handleInputFocus = e => {
+    //     this.setState({ focus: e.target.name });
+    // };
+
+    const onInputChange = e => {
+        if (e.target.name === 'number') {
+            e.target.value = formatCreditCardNumber(e.target.value);
+        } else if (e.target.name === 'expiry') {
+            e.target.value = formatExpirationDate(e.target.value);
+        } else if (e.target.name === 'cvc') {
+            e.target.value = formatCVC(e.target.value, null, number);
         }
+        setValues({ ...values, [e.target.name]: e.target.value });
+        //setErrors({ ...errors, [e.target.name]: null });
     };
 
-    handleInputFocus = e => {
-        this.setState({ focus: e.target.name });
+    const onSubmit = (search: string) => {
+        const url = `${Config.baseURL}`;
+        setLoading(true);
+        fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(values),
+            headers: { 'Content-type': 'application/json; charset=UTF-8' },
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(response.statusText);
+                }
+                return response;
+            })
+            .then(data => {
+                setLoading(false);
+                console.log(data, 'SATA');
+                Router.push({
+                    pathname: '/confirm',
+                });
+            })
+            .catch(error => {
+                console.log(error, 'error');
+                setLoading(false);
+            });
     };
 
-    handleInputChange = ({ target }) => {
-        if (target.name === 'number') {
-            target.value = formatCreditCardNumber(target.value);
-        } else if (target.name === 'expiry') {
-            target.value = formatExpirationDate(target.value);
-        } else if (target.name === 'cvc') {
-            target.value = formatCVC(target.value, null, this.state.number);
-        }
-
-        this.setState({ [target.name]: target.value });
-    };
-
-    pushToPayment = () => {
-        // if (!this.validate()) return;
-        Router.push({
-            pathname: '/confirm',
-        });
-    };
-
-    render() {
-        const { number, name, expiry, cvc, focused } = this.state;
-        return (
-            <Site>
-                <Title>Payment Details</Title>
-                <CartWrapper>
-                    <ItemWrapper>
-                        {' '}
-                        <InputFormCtr>
-                            <InputFlexer>
-                                <InputCtr>
-                                    <div className="label">{'credit card number'}</div>
-                                    <div className="spacer"></div>
-                                    <div className="eachInput">
-                                        <Input
-                                            placeholder="**** **** **** ****"
-                                            name="number"
-                                            pattern="[\d| ]{16,22}"
-                                            required
-                                            onChange={this.handleInputChange}
-                                            value={number}
-                                            onFocus={this.handleInputFocus}
-                                        />
-                                    </div>
-                                </InputCtr>
-                                <InputCtr>
-                                    <div className="label">{'name on card'}</div>
-                                    <div className="spacer"></div>
-                                    <div className="eachInput">
-                                        <Input
-                                            placeholder="name"
-                                            name="name"
-                                            required
-                                            onChange={this.handleInputChange}
-                                            value={name}
-                                            onFocus={this.handleInputFocus}
-                                        />
-                                    </div>
-                                </InputCtr>
-                            </InputFlexer>
-                            <div className="spacebetween"></div>
-                            <Col>
-                                <InputCtr>
-                                    <div className="label">{'Expiry'}</div>
-                                    <div className="spacer"></div>
-                                    <div className="eachInput">
-                                        <Input
-                                            placeholder="Expiry"
-                                            type="tel"
-                                            name="expiry"
-                                            required
-                                            onChange={this.handleInputChange}
-                                            value={expiry}
-                                            pattern="\d\d/\d\d"
-                                            onFocus={this.handleInputFocus}
-                                        />
-                                    </div>
-                                </InputCtr>
-                                <div className="widthSpacer"></div>
-                                <InputCtr>
-                                    <div className="label">{'cvc'}</div>
-                                    <div className="spacer"></div>
-                                    <div className="eachInput">
-                                        <Input
-                                            placeholder="CVC"
-                                            name="cvc"
-                                            required
-                                            onChange={this.handleInputChange}
-                                            value={cvc}
-                                            pattern="\d{3,4}"
-                                            type="tel"
-                                            onFocus={this.handleInputFocus}
-                                        />
-                                    </div>
-                                </InputCtr>
-                            </Col>
-                        </InputFormCtr>
-                        <BtnCtr>
-                            <Button color={`#3866df`} solid onClick={this.pushToPayment}>
-                                <BtnText>Submit</BtnText>
-                            </Button>
-                        </BtnCtr>
-                    </ItemWrapper>
-                    <SummaryWrapper>
-                        <SummaryCtr>
-                            <Card
-                                number={number}
-                                name={name}
-                                expiry={expiry}
-                                cvc={cvc}
-                                focused={focused}
-                                callback={this.handleCallback}
-                            />
-                        </SummaryCtr>
-                    </SummaryWrapper>
-                </CartWrapper>
-            </Site>
-        );
-    }
-}
+    return (
+        <Site>
+            <Title>Payment Details</Title>
+            <CartWrapper>
+                <ItemWrapper>
+                    {' '}
+                    <InputFormCtr>
+                        <InputFlexer>
+                            <InputCtr>
+                                <div className="label">{'credit card number'}</div>
+                                <div className="spacer"></div>
+                                <div className="eachInput">
+                                    <Input
+                                        placeholder="**** **** **** ****"
+                                        name="number"
+                                        pattern="[\d| ]{16,22}"
+                                        required
+                                        onChange={onInputChange}
+                                        value={number}
+                                        //onFocus={this.handleInputFocus}
+                                    />
+                                </div>
+                            </InputCtr>
+                            <InputCtr>
+                                <div className="label">{'name on card'}</div>
+                                <div className="spacer"></div>
+                                <div className="eachInput">
+                                    <Input
+                                        placeholder="name"
+                                        name="name"
+                                        required
+                                        onChange={onInputChange}
+                                        value={name}
+                                        //onFocus={handleInputFocus}
+                                    />
+                                </div>
+                            </InputCtr>
+                        </InputFlexer>
+                        <div className="spacebetween"></div>
+                        <Col>
+                            <InputCtr>
+                                <div className="label">{'Expiry'}</div>
+                                <div className="spacer"></div>
+                                <div className="eachInput">
+                                    <Input
+                                        placeholder="MM/YY"
+                                        type="tel"
+                                        name="expiry"
+                                        required
+                                        onChange={onInputChange}
+                                        value={expiry}
+                                        pattern="\d\d/\d\d"
+                                        //onFocus={this.handleInputFocus}
+                                    />
+                                </div>
+                            </InputCtr>
+                            <div className="widthSpacer"></div>
+                            <InputCtr>
+                                <div className="label">{'cvc'}</div>
+                                <div className="spacer"></div>
+                                <div className="eachInput">
+                                    <Input
+                                        placeholder="CVC"
+                                        name="cvc"
+                                        required
+                                        onChange={onInputChange}
+                                        value={cvc}
+                                        pattern="\d{3,4}"
+                                        type="tel"
+                                        //onFocus={this.handleInputFocus}
+                                    />
+                                </div>
+                            </InputCtr>
+                        </Col>
+                    </InputFormCtr>
+                    <BtnCtr>
+                        <Button color={`#3866df`} solid onClick={onSubmit}>
+                            <BtnText>{loading ? 'loading...' : 'Submit'}</BtnText>
+                        </Button>
+                    </BtnCtr>
+                </ItemWrapper>
+                <SummaryWrapper>
+                    <SummaryCtr>
+                        <Card
+                            number={number}
+                            name={name}
+                            expiry={expiry}
+                            cvc={cvc}
+                            //focused={focused}
+                            //callback={handleCallback}
+                        />
+                    </SummaryCtr>
+                </SummaryWrapper>
+            </CartWrapper>
+        </Site>
+    );
+};
 
 export default Payment;

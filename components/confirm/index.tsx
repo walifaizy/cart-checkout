@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Router from 'next/router';
 import { Button, AlertBox } from '../common';
 import { TUserData, TRepo } from '../../_types';
 import styled from 'styled-components';
 import Items from '../common/items';
+import { CartContext } from '../../contexts/cartContext';
 
 const CartWrapper = styled.div`
     display: flex;
@@ -65,7 +66,8 @@ const CartCount = styled.div`
 `;
 
 const Confirm = props => {
-    const { cartInfo } = props;
+    const { cartInfo, setCartInfo } = useContext(CartContext);
+    //const { cartInfo } = props;
     const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
@@ -83,10 +85,15 @@ const Confirm = props => {
         });
 
     const pushToCart = () => {
+        setCartInfo({});
         Router.push({
             pathname: '/cart',
         });
     };
+
+    if (!(cartInfo && cartInfo.items && cartInfo.items.length)) {
+        return null;
+    }
 
     return (
         <>

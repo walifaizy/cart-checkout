@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Router from 'next/router';
 import { Button } from '../common';
 import { TUserData, TRepo } from '../../_types';
 import styled from 'styled-components';
 import cartData from '../../data/index';
 import CartItem from '../common/items';
+import { CartContext } from '../../contexts/cartContext';
 
 const CartWrapper = styled.div`
     display: flex;
@@ -70,8 +71,8 @@ const CartCount = styled.div`
     }
 `;
 
-const Cart = props => {
-    const { cartInfo } = props;
+const Cart = () => {
+    const { cartInfo } = useContext(CartContext);
     const count = cartInfo && cartInfo.cartCount;
     const list =
         cartInfo &&
@@ -85,6 +86,10 @@ const Cart = props => {
             pathname: '/accounts',
         });
     };
+
+    if (!(cartInfo && cartInfo.items && cartInfo.items.length)) {
+        return 'no Data';
+    }
 
     return (
         <Site>
