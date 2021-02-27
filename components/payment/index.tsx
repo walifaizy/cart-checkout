@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useContext } from 'react';
 import Router, { withRouter } from 'next/router';
 import Card from 'react-credit-cards';
 import { Input, Button } from '../common';
@@ -9,6 +9,7 @@ import styled from 'styled-components';
 import 'react-credit-cards/es/styles-compiled.css';
 
 import { formatCreditCardNumber, formatCVC, formatExpirationDate, formatFormData } from '../../utils/cardValidator';
+import { CartContext } from '../../contexts/cartContext';
 
 const Site = styled.div`
     padding: 0 25px;
@@ -128,6 +129,7 @@ const SummaryCtr = styled.div`
 `;
 
 const Payment = () => {
+    const { cartInfo } = useContext(CartContext);
     const [values, setValues] = useState({
         number: '',
         name: '',
@@ -138,15 +140,6 @@ const Payment = () => {
     });
     const { number, name, cvc, issuer, focused, expiry } = values;
     const [loading, setLoading] = useState(false);
-    // const handleCallback = ({ issuer }, isValid) => {
-    //     if (isValid) {
-    //         this.setState({ issuer });
-    //     }
-    // };
-
-    // const handleInputFocus = e => {
-    //     this.setState({ focus: e.target.name });
-    // };
 
     const onInputChange = e => {
         if (e.target.name === 'number') {
@@ -160,12 +153,17 @@ const Payment = () => {
         //setErrors({ ...errors, [e.target.name]: null });
     };
 
-    const onSubmit = (search: string) => {
+    const orderDetails = {
+        values,
+        cartInfo,
+    };
+
+    const onSubmit = () => {
         const url = `${Config.baseURL}`;
         setLoading(true);
         fetch(url, {
             method: 'POST',
-            body: JSON.stringify(values),
+            body: JSON.stringify(orderDetails),
             headers: { 'Content-type': 'application/json; charset=UTF-8' },
         })
             .then(response => {
@@ -176,7 +174,6 @@ const Payment = () => {
             })
             .then(data => {
                 setLoading(false);
-                console.log(data, 'SATA');
                 Router.push({
                     pathname: '/confirm',
                 });
@@ -263,7 +260,12 @@ const Payment = () => {
                         </Col>
                     </InputFormCtr>
                     <BtnCtr>
-                        <Button color={`#3866df`} solid onClick={onSubmit}>
+                        <Button
+                            color={`#3866df`}
+                            solid
+                            onClick={onSubmit}
+                            disabled={!values.name || !values.number || !values.expiry || !values.cvc}
+                        >
                             <BtnText>{loading ? 'loading...' : 'Submit'}</BtnText>
                         </Button>
                     </BtnCtr>
