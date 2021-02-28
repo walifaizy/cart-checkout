@@ -89,7 +89,7 @@ type TUserInfoErrors = {
 };
 
 const Login = () => {
-    const { userInfo } = useContext(CartContext);
+    const { userInfo, setUserInfo } = useContext(CartContext);
     const [values, setValues] = useState<TUserInfo>(userInfo);
     const [errors, setErrors] = useState<TUserInfoErrors>({});
 
@@ -120,6 +120,7 @@ const Login = () => {
 
     const pushToCart = () => {
         if (!validate()) return;
+        setUserInfo(values);
         Router.push({
             pathname: '/cart',
         });
