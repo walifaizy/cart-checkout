@@ -1,9 +1,10 @@
-import React, { Component, useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Input, Button } from '../common';
-import { TUserData, TRepo } from '../../_types';
 import validator from '../../utils/validator';
 import styled from 'styled-components';
 import Router, { withRouter } from 'next/router';
+import { device } from '../../styles/globalStyles';
+import { CartContext } from '../../contexts/cartContext';
 
 const Wrapper = styled.div`
     display: flex;
@@ -88,7 +89,8 @@ type TUserInfoErrors = {
 };
 
 const Login = () => {
-    const [values, setValues] = useState<TUserInfo>({ email: '', password: '' });
+    const { userInfo } = useContext(CartContext);
+    const [values, setValues] = useState<TUserInfo>(userInfo);
     const [errors, setErrors] = useState<TUserInfoErrors>({});
 
     const onInputChange = e => {

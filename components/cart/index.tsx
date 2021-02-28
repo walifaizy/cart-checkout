@@ -3,25 +3,34 @@ import Router from 'next/router';
 import { Button } from '../common';
 import { TUserData, TRepo } from '../../_types';
 import styled from 'styled-components';
-import cartData from '../../data/index';
+import { device } from '../../styles/globalStyles';
 import CartItem from '../common/items';
 import { CartContext } from '../../contexts/cartContext';
 
 const CartWrapper = styled.div`
     display: flex;
     justify-content: space-between;
+    flex-direction: column;
+    @media ${device.tablet} {
+        flex-direction: row;
+    }
 `;
 
 const ItemWrapper = styled.div`
     flex: 0 0 65%;
-    margin: 0px auto;
+    @media ${device.tablet} {
+        margin: 0px auto;
+    }
     min-width: 0px;
 `;
 
 const SummaryWrapper = styled.div`
     flex: 1 1 0%;
     min-width: 0px;
-    margin-left: 30px;
+
+    @media ${device.tablet} {
+        margin-left: 30px;
+    }
 `;
 
 const SummaryCtr = styled.div`
@@ -71,6 +80,16 @@ const CartCount = styled.div`
     }
 `;
 
+const EmptyState = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+    .ctr {
+        font-size: 2.2rem;
+    }
+`;
+
 const Cart = () => {
     const { cartInfo } = useContext(CartContext);
     const count = cartInfo && cartInfo.cartCount;
@@ -88,7 +107,11 @@ const Cart = () => {
     };
 
     if (!(cartInfo && cartInfo.items && cartInfo.items.length)) {
-        return 'no Data';
+        return (
+            <EmptyState>
+                <div className="ctr">Cart Is Empty</div>
+            </EmptyState>
+        );
     }
 
     return (

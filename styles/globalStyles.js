@@ -1,5 +1,20 @@
 import { createGlobalStyle } from 'styled-components';
 
+const media = {
+    mobile: '480px',
+    tablet: '766px',
+    desktop: '992px',
+    midScreen: '1200px',
+    largeScreen: '1400px',
+};
+export const device = {
+    mobile: `(min-width: ${media.mobile})`,
+    tablet: `(min-width: ${media.tablet})`,
+    desktop: `(min-width: ${media.desktop})`,
+    midScreen: `(min-width: ${media.midScreen})`,
+    largeScreen: `(min-width: ${media.largeScreen})`,
+};
+
 const GlobalStyles = createGlobalStyle`
 html,
 body {

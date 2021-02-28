@@ -4,27 +4,20 @@ import Card from 'react-credit-cards';
 import { Input, Button } from '../common';
 import Config from '../../config';
 import validator from '../../utils/validator';
+
 import styled from 'styled-components';
 
 import 'react-credit-cards/es/styles-compiled.css';
 
 import { formatCreditCardNumber, formatCVC, formatExpirationDate, formatFormData } from '../../utils/cardValidator';
 import { CartContext } from '../../contexts/cartContext';
+import { device } from '../../styles/globalStyles';
 
 const Site = styled.div`
     padding: 0 25px;
     margin: 20px auto;
     width: 100%;
     box-sizing: border-box;
-`;
-
-const Ctr = styled.div`
-    box-sizing: border-box;
-    background-color: #fff;
-    box-shadow: 0 2px 35px 0 rgb(0 0 0 / 5%);
-    border-radius: 4px;
-    width: 100%;
-    margin-bottom: 20px;
 `;
 
 const InputFormCtr = styled.div`
@@ -89,8 +82,12 @@ const Title = styled.div`
 const CartWrapper = styled.div`
     display: flex;
     justify-content: space-between;
+    flex-direction: column;
     background-color: rgb(255, 255, 255);
     border: 1px solid rgba(198, 204, 221, 0.5);
+    @media ${device.tablet} {
+        flex-direction: row;
+    }
 `;
 
 const ItemWrapper = styled.div`
@@ -130,6 +127,8 @@ const SummaryCtr = styled.div`
 
 const Payment = () => {
     const { cartInfo } = useContext(CartContext);
+    const { addressInfo } = useContext(CartContext);
+    const { userInfo } = useContext(CartContext);
     const [values, setValues] = useState({
         number: '',
         name: '',
@@ -154,8 +153,11 @@ const Payment = () => {
     };
 
     const orderDetails = {
-        values,
+        orderId: `AE${Date.now()}`,
+        paymentInfo: values,
         cartInfo,
+        addressdetails: addressInfo,
+        userName: userInfo.email,
     };
 
     const onSubmit = () => {
@@ -163,7 +165,7 @@ const Payment = () => {
         setLoading(true);
         fetch(url, {
             method: 'POST',
-            body: JSON.stringify(orderDetails),
+            body: JSON.stringify({ orderDetails: orderDetails }),
             headers: { 'Content-type': 'application/json; charset=UTF-8' },
         })
             .then(response => {

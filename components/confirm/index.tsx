@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Router from 'next/router';
 import { Button, AlertBox } from '../common';
-import { TUserData, TRepo } from '../../_types';
+import { device } from '../../styles/globalStyles';
 import styled from 'styled-components';
 import Items from '../common/items';
 import { CartContext } from '../../contexts/cartContext';
@@ -9,18 +9,27 @@ import { CartContext } from '../../contexts/cartContext';
 const CartWrapper = styled.div`
     display: flex;
     justify-content: space-between;
+    flex-direction: column;
+    @media ${device.tablet} {
+        flex-direction: row;
+    }
 `;
 
 const ItemWrapper = styled.div`
     flex: 0 0 65%;
-    margin: 0px auto;
+    @media ${device.tablet} {
+        margin: 0px auto;
+    }
     min-width: 0px;
 `;
 
 const SummaryWrapper = styled.div`
     flex: 1 1 0%;
     min-width: 0px;
-    margin-left: 30px;
+
+    @media ${device.tablet} {
+        margin-left: 30px;
+    }
 `;
 
 const SummaryCtr = styled.div`

@@ -25,6 +25,11 @@ const Container = styled.div`
         background-color: ${props => props.color};
         color: #fff;
     }
+    &.disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+        pointer-events: none;
+    }
     &:after {
         content: '';
         display: block;
@@ -62,7 +67,11 @@ const Button = props => {
     } = props;
 
     return (
-        <Container {...rest} className={`${solid ? 'solid' : ''}   ${className} `} color={color}>
+        <Container
+            {...rest}
+            className={`${solid ? 'solid' : ''} ${disabled ? 'disabled' : ''}   ${className} `}
+            color={color}
+        >
             {children}
         </Container>
     );
