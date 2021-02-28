@@ -76,6 +76,12 @@ const Title = styled.div`
     line-height: 25px;
     color: rgb(51, 51, 51);
     margin: 0 0 15px 0;
+    display: flex;
+    .back {
+        font-size: 12px;
+        color: #3866df;
+        cursor: pointer;
+    }
 `;
 
 const CartWrapper = styled.div`
@@ -183,9 +189,18 @@ const Payment = () => {
             });
     };
 
+    const pushBack = () => {
+        pushToRoute('accounts');
+    };
+
     return (
         <Site>
-            <Title>Payment Details</Title>
+            <Title>
+                <div onClick={pushBack} className="back">
+                    {`< back`} &nbsp;
+                </div>
+                Payment Details
+            </Title>
             <CartWrapper>
                 <ItemWrapper>
                     {' '}
