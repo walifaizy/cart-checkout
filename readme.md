@@ -2,6 +2,8 @@
 
 A single page application for checkout process
 
+# [Live Demo](https://walifaizy.github.io/cart-checkout/)
+
 # Running locally
 
 1. Clone the repository
