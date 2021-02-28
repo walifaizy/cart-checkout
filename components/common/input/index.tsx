@@ -1,11 +1,6 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 
-type Props = {
-    className: String;
-    error: Boolean;
-};
-
 const Container = styled.div`
     position: relative;
     display: flex;
@@ -35,8 +30,21 @@ const Error = styled.div`
     margin-top: 8px;
     color: rgb(171, 19, 10);
 `;
+type Props = {
+    className: String;
+    error: Boolean;
+    type: string;
+    value: string;
+    onChange: Function;
+    placeholder: string;
+    ctrClassName: string;
+    hideErrorText: Boolean;
+};
 
-class Input extends React.PureComponent {
+type State = {
+    inFocus: Boolean;
+};
+class Input extends React.PureComponent<Props, State> {
     state = {
         inFocus: false,
     };
@@ -54,7 +62,7 @@ class Input extends React.PureComponent {
             ctrClassName,
             setRef,
             type,
-
+            placeholder,
             ...rest
         } = this.props;
 
@@ -70,6 +78,7 @@ class Input extends React.PureComponent {
                         value={value}
                         onChange={this.onChange}
                         ref={setRef}
+                        placeholder={placeholder}
                     />
                 </Container>
                 {error && !hideErrorText && <Error>{error}</Error>}
