@@ -2,13 +2,12 @@ import { GlobalStyles } from '../styles';
 import { CartContextProvider } from '../contexts/cartContext';
 import { useEffect } from 'react';
 import Router from 'next/router';
+import { pushRoute } from '../utils/pushroute';
 
 function MyApp({ Component, pageProps }) {
     useEffect(() => {
         if (Router.router.route !== '/') {
-            Router.push({
-                pathname: '/',
-            });
+            pushRoute('');
         }
     }, []);
     return (

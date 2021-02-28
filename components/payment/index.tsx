@@ -1,5 +1,4 @@
 import React, { useState, useContext } from 'react';
-import Router from 'next/router';
 import Card from 'react-credit-cards';
 import { Input, Button } from '../common';
 import Config from '../../config';
@@ -11,6 +10,7 @@ import 'react-credit-cards/es/styles-compiled.css';
 import { formatCreditCardNumber, formatCVC, formatExpirationDate } from '../../utils/cardValidator';
 import { CartContext } from '../../contexts/cartContext';
 import { device } from '../../styles/globalStyles';
+import { pushRoute } from '../../utils/pushroute';
 
 const Site = styled.div`
     padding: 0 25px;
@@ -175,9 +175,7 @@ const Payment = () => {
             })
             .then(data => {
                 setLoading(false);
-                Router.push({
-                    pathname: '/confirm',
-                });
+                pushRoute('confirm');
             })
             .catch(error => {
                 console.log(error, 'error');
