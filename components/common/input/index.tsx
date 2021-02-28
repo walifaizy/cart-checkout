@@ -32,7 +32,7 @@ const Error = styled.div`
 `;
 type Props = {
     error: string;
-    type: string;
+    type?: string;
     value: string;
     onChange: (e: any) => void;
     placeholder: string;
@@ -51,30 +51,14 @@ class Input extends React.PureComponent<Props, State> {
         this.props.onChange(e);
     };
     render() {
-        const {
-            error,
-
-            value,
-
-            setRef,
-            type,
-            placeholder,
-            ...rest
-        } = this.props;
+        const { error, value, type = 'text', placeholder, ...rest } = this.props;
 
         const { inFocus } = this.state;
 
         return (
             <Wrapper>
                 <Container className={`${error ? 'inputError' : ''}`}>
-                    <input
-                        type={type}
-                        {...rest}
-                        value={value}
-                        onChange={this.onChange}
-                        ref={setRef}
-                        placeholder={placeholder}
-                    />
+                    <input type={type} {...rest} value={value} onChange={this.onChange} placeholder={placeholder} />
                 </Container>
                 {error && <Error>{error}</Error>}
             </Wrapper>

@@ -24,6 +24,6 @@ export type TItems = {
         brand: string;
         title: string;
         warranty: string;
-        unitPrice: string;
+        unitPrice: number;
     };
 };

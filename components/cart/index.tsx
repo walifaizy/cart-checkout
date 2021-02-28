@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import Router from 'next/router';
 import { Button } from '../common';
-import { TUserData, TRepo } from '../../_types';
 import styled from 'styled-components';
 import { device } from '../../styles/globalStyles';
 import CartItem from '../common/items';
@@ -97,7 +96,7 @@ const Cart = () => {
         cartInfo &&
         cartInfo.items &&
         cartInfo.items.map((item, index) => {
-            return <CartItem item={item} key={index} cartCount={count} />;
+            return <CartItem item={item} key={index} />;
         });
 
     const pushToAccount = () => {
