@@ -32,7 +32,7 @@ const Error = styled.div`
 `;
 type Props = {
     className: String;
-    error: Boolean;
+    error: String;
     type: string;
     value: string;
     onChange: Function;
