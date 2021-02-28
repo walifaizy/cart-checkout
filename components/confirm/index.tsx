@@ -5,7 +5,7 @@ import { device } from '../../styles/globalStyles';
 import styled from 'styled-components';
 import Items from '../common/items';
 import { CartContext } from '../../contexts/cartContext';
-import { pushRoute } from '../../utils/pushroute';
+import { pushToRoute } from '../../utils/pushToRoute';
 
 const CartWrapper = styled.div`
     display: flex;
@@ -96,7 +96,7 @@ const Confirm = props => {
 
     const pushToCart = () => {
         setCartInfo({});
-        pushRoute('cart');
+        pushToRoute('cart');
     };
 
     if (!(cartInfo && cartInfo.items && cartInfo.items.length)) {

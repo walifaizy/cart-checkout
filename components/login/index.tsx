@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import Router, { withRouter } from 'next/router';
 import { device } from '../../styles/globalStyles';
 import { CartContext } from '../../contexts/cartContext';
-import { pushRoute } from '../../utils/pushroute';
+import { pushToRoute } from '../../utils/pushToRoute';
 
 const Wrapper = styled.div`
     display: flex;
@@ -122,7 +122,7 @@ const Login = () => {
     const pushToCart = () => {
         if (!validate()) return;
         setUserInfo(values);
-        pushRoute('cart');
+        pushToRoute('cart');
     };
     return (
         <Wrapper>

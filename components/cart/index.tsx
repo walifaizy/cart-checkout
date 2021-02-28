@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { device } from '../../styles/globalStyles';
 import CartItem from '../common/items';
 import { CartContext } from '../../contexts/cartContext';
-import { pushRoute } from '../../utils/pushroute';
+import { pushToRoute } from '../../utils/pushToRoute';
 
 const CartWrapper = styled.div`
     display: flex;
@@ -101,7 +101,7 @@ const Cart = () => {
         });
 
     const pushToAccount = () => {
-        pushRoute('accounts');
+        pushToRoute('accounts');
     };
 
     if (!(cartInfo && cartInfo.items && cartInfo.items.length)) {

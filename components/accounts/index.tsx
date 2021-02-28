@@ -4,7 +4,7 @@ import { Input, Button } from '../common';
 import validator from '../../utils/validator';
 import styled from 'styled-components';
 import { CartContext } from '../../contexts/cartContext';
-import { pushRoute } from '../../utils/pushroute';
+import { pushToRoute } from '../../utils/pushToRoute';
 
 const Site = styled.div`
     padding: 0 25px;
@@ -136,8 +136,7 @@ const Accounts = () => {
     const pushToPayment = () => {
         if (!validate()) return;
         setAddressInfo(values);
-
-        pushRoute('payment');
+        pushToRoute('payment');
     };
     return (
         <Site>
