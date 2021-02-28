@@ -10,7 +10,7 @@ import 'react-credit-cards/es/styles-compiled.css';
 import { formatCreditCardNumber, formatCVC, formatExpirationDate } from '../../utils/cardValidator';
 import { CartContext } from '../../contexts/cartContext';
 import { device } from '../../styles/globalStyles';
-import { pushRoute } from '../../utils/pushroute';
+import { pushToRoute } from '../../utils/pushToRoute';
 
 const Site = styled.div`
     padding: 0 25px;
@@ -175,7 +175,7 @@ const Payment = () => {
             })
             .then(data => {
                 setLoading(false);
-                pushRoute('confirm');
+                pushToRoute('confirm');
             })
             .catch(error => {
                 console.log(error, 'error');
