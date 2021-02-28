@@ -31,14 +31,11 @@ const Error = styled.div`
     color: rgb(171, 19, 10);
 `;
 type Props = {
-    className: string;
     error: string;
     type: string;
     value: string;
-    onChange: Function;
+    onChange: (e: any) => void;
     placeholder: string;
-    ctrClassName: string;
-    hideErrorText: boolean;
     name: string;
 };
 
@@ -55,12 +52,10 @@ class Input extends React.PureComponent<Props, State> {
     };
     render() {
         const {
-            className,
             error,
-            hideErrorText,
+
             value,
 
-            ctrClassName,
             setRef,
             type,
             placeholder,
@@ -71,10 +66,9 @@ class Input extends React.PureComponent<Props, State> {
 
         return (
             <Wrapper>
-                <Container className={`${error ? 'inputError' : ''} ${ctrClassName || ''}`}>
+                <Container className={`${error ? 'inputError' : ''}`}>
                     <input
                         type={type}
-                        className={`  ${className || ''}`}
                         {...rest}
                         value={value}
                         onChange={this.onChange}
@@ -82,7 +76,7 @@ class Input extends React.PureComponent<Props, State> {
                         placeholder={placeholder}
                     />
                 </Container>
-                {error && !hideErrorText && <Error>{error}</Error>}
+                {error && <Error>{error}</Error>}
             </Wrapper>
         );
     }
