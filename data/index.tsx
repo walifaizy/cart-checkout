@@ -20,7 +20,7 @@ export type TCartData = {
 const cartData: TCartData = {
     items: [
         {
-            imageURL: 'https://k.nooncdn.com/t_desktop-thumbnail-v1/v1585233265/N28431690A_1.jpg',
+            imageURL: 'http://placeimg.com/109/148/any',
             estimatedDeliveryDate: '2021-02-23',
             unitPrice: 163.0,
             warranty: '1 year warranty',
@@ -28,7 +28,7 @@ const cartData: TCartData = {
             title: 'Digital Airfryer 3.2L 1400W Black',
         },
         {
-            imageURL: 'https://k.nooncdn.com/t_desktop-thumbnail-v1/v1595488129/N27407599A_1.jpg',
+            imageURL: 'http://placeimg.com/109/148/any',
             estimatedDeliveryDate: '2021-02-23',
             unitPrice: 15.0,
             warranty: '1 year warranty',
@@ -37,7 +37,7 @@ const cartData: TCartData = {
         },
         {
             warranty: '1 year warranty',
-            imageURL: 'https://k.nooncdn.com/t_desktop-thumbnail-v1/v1611467659/N40792846A_1.jpg',
+            imageURL: 'http://placeimg.com/109/148/any',
             estimatedDeliveryDate: '2021-02-23',
             unitPrice: 35.0,
             brand: 'Xiomi',
