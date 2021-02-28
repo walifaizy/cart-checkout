@@ -31,14 +31,15 @@ const Error = styled.div`
     color: rgb(171, 19, 10);
 `;
 type Props = {
-    className: String;
-    error: String;
+    className: string;
+    error: string;
     type: string;
     value: string;
     onChange: Function;
     placeholder: string;
     ctrClassName: string;
-    hideErrorText: Boolean;
+    hideErrorText: boolean;
+    name: string;
 };
 
 type State = {
