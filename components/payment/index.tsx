@@ -1,15 +1,14 @@
-import React, { Component, useState, useContext } from 'react';
-import Router, { withRouter } from 'next/router';
+import React, { useState, useContext } from 'react';
+import Router from 'next/router';
 import Card from 'react-credit-cards';
 import { Input, Button } from '../common';
 import Config from '../../config';
-import validator from '../../utils/validator';
 
 import styled from 'styled-components';
 
 import 'react-credit-cards/es/styles-compiled.css';
 
-import { formatCreditCardNumber, formatCVC, formatExpirationDate, formatFormData } from '../../utils/cardValidator';
+import { formatCreditCardNumber, formatCVC, formatExpirationDate } from '../../utils/cardValidator';
 import { CartContext } from '../../contexts/cartContext';
 import { device } from '../../styles/globalStyles';
 
@@ -202,10 +201,8 @@ const Payment = () => {
                                         placeholder="**** **** **** ****"
                                         name="number"
                                         pattern="[\d| ]{16,22}"
-                                        required
                                         onChange={onInputChange}
                                         value={number}
-                                        //onFocus={this.handleInputFocus}
                                     />
                                 </div>
                             </InputCtr>
@@ -213,14 +210,7 @@ const Payment = () => {
                                 <div className="label">{'name on card'}</div>
                                 <div className="spacer"></div>
                                 <div className="eachInput">
-                                    <Input
-                                        placeholder="name"
-                                        name="name"
-                                        required
-                                        onChange={onInputChange}
-                                        value={name}
-                                        //onFocus={handleInputFocus}
-                                    />
+                                    <Input placeholder="name" name="name" onChange={onInputChange} value={name} />
                                 </div>
                             </InputCtr>
                         </InputFlexer>
@@ -234,11 +224,9 @@ const Payment = () => {
                                         placeholder="MM/YY"
                                         type="tel"
                                         name="expiry"
-                                        required
                                         onChange={onInputChange}
                                         value={expiry}
                                         pattern="\d\d/\d\d"
-                                        //onFocus={this.handleInputFocus}
                                     />
                                 </div>
                             </InputCtr>
@@ -250,12 +238,10 @@ const Payment = () => {
                                     <Input
                                         placeholder="CVC"
                                         name="cvc"
-                                        required
                                         onChange={onInputChange}
                                         value={cvc}
                                         pattern="\d{3,4}"
                                         type="tel"
-                                        //onFocus={this.handleInputFocus}
                                     />
                                 </div>
                             </InputCtr>

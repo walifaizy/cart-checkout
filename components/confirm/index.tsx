@@ -90,7 +90,7 @@ const Confirm = props => {
         cartInfo &&
         cartInfo.items &&
         cartInfo.items.map((item, index) => {
-            return <Items item={item} key={index} cartCount={cartInfo && cartInfo.cartCount} />;
+            return <Items item={item} key={index} />;
         });
 
     const pushToCart = () => {

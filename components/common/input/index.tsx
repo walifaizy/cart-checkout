@@ -31,12 +31,13 @@ const Error = styled.div`
     color: rgb(171, 19, 10);
 `;
 type Props = {
-    error: string;
+    error?: string;
     type?: string;
     value: string;
     onChange: (e: any) => void;
     placeholder: string;
     name: string;
+    pattern?: string;
 };
 
 type State = {
